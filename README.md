@@ -10,14 +10,14 @@ For our project, we implemented a morse code translator, where the user can push
 
 ## How to Run
 
-You can run this project on Verilog, assigning vga_top as the top module. Ensure the fpga board is connected to the monitor and turn on the VGA switch. The translator operates by the use of four buttons: a dot, dash, enter, and reset. These should be pre-set to P17, N17, P18, and M18 respectively. You can confirrm which buttons correspond to which pins on the board in the contraints.xdc file. Reference the morse code dictionary pdf when inputting dot/dash combinations. When you have finished one input combination of dots/dashes, click the enter button on the fpga and you will see the corresponding letter appear on the screen. Click reset when you want to clear the screen. 
+You can run this project on Verilog, assigning vga_top as the top module. Ensure the fpga board is connected to the monitor and turn on the VGA switch. The translator operates by the use of five buttons: a dot, dash, enter, space, and reset. These should be pre-set to P17, N17, P18, M17, and M18 respectively. You can confirrm which buttons correspond to which pins on the board in the contraints.xdc file. Reference the morse code dictionary pdf when inputting dot/dash combinations. When you have finished one input combination of dots/dashes/spaces, click the enter button on the fpga and you will see the corresponding letter appear on the screen. Click reset when you want to clear the screen. 
 
 ---
 
 ## **Code Overview**
-top_2.v:
+top_2:
 
-The top_2 module is responsible for converting the user's morse code input to an ASCII letter. For example, it is here that a "dot, dash, enter" input assigns "A" to our letter variable. 
+The top_2 module is responsible for matching the user's morse code input to an ASCII letter. For example, it is here that a "dot, dash, enter" input assigns "A" to our letter variable. 
 
 We represent the input as a 6 bit binary value, where a 1 represents a dash and a 0 represents a dot. Initalized as 0, the morse code variable shifts to the left as the binary input is inserted at its end. The input can be any number betweenn 0-4 button presses. Each user input will have a unique morse_code and code_length identifier. These are used to to form a dictionary, of sorts, where each identifier corresponds to a different, 8 bit, letter.   
 
@@ -27,12 +27,15 @@ morse_code_translator_tb:
 
 This testbench is used in pairing with the top_2 module. Here, we simulated different morse code sequences to verify the input was paired with the correct ASCII value. 
 
-debounce.v:
+debounce:
 
 The debouncer module handles noisy button inputs, ensuring only a single input is processed. A button press is triggered by the positive edge of the debounced signal. 
 
 debounce_tb:
 This module was used to test our debouncer with varying inputs. 
+
+clk.divider:
+?help :(
 
 ascii_rom:
 The ascii_rom module provides us with defined bit patterns for each ASCII character, used for our vga display.  
@@ -46,6 +49,9 @@ Here, we instantiate the top_2 module, which translates the user input to a lett
 In this module we also establish a black background with white text for the screen display. 
 
 ---
+
+##**What To Expect From Bitstream**
+When pushing the bitstream to the FPGA, you should expect to see the eight righmost LEDs display the 8-bit ASCII value that corresponds to the letter input. After you input you morse code sequence and press the enter button, you will see the equivalen text appear on the VGA screen.  
 
 ## **References**
 
