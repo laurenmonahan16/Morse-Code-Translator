@@ -1,101 +1,54 @@
-# VGA Synchronization Project
+# Morse Code Translator
 
-This project implements synchronization signals for a VGA display controller. It generates horizontal (`h_sync`) and vertical (`v_sync`) synchronization pulses based on the current pixel position and timing parameters. These signals are essential for ensuring proper display of frames on a monitor.
+Team 14: Lauren Monahan, Nandana Alwarappan, Sterling Wodzro, Aidan Born
+
+Project Demo Link: *ADD*
+
+For our project, we implemented a morse code translator, where the user can push a sequence of buttons either representing a dot, dash, space, enter, or reset on the fpga board as ASCII text appears on the host computer screen. 
 
 ---
 
-## **Features**
+## How to Run
 
-- **Horizontal Sync (h_sync):**
-  - Controls the timing of individual lines in the frame.
-  - Activates during the horizontal blanking period.
-- **Vertical Sync (v_sync):**
-  - Controls the timing of frames.
-  - Activates during the vertical blanking period.
-- Fully parameterized to support customizable resolutions and refresh rates.
+You can run this project on Verilog, assigning vga_top as the top module. Ensure the fpga board is connected to the monitor and turn on the VGA switch. The translator operates by the use of four buttons: a dot, dash, enter, and reset. These should be pre-set to P17, N17, P18, and M18 respectively. You can confirrm which buttons correspond to which pins on the board in the contraints.xdc file. Reference the morse code dictionary pdf when inputting dot/dash combinations. When you have finished one input combination of dots/dashes, click the enter button on the fpga and you will see the corresponding letter appear on the screen. Click reset when you want to clear the screen. 
 
 ---
 
 ## **Code Overview**
+top_2.v:
 
-### Synchronization Logic
-The primary synchronization logic is implemented as follows:
+The top_2 module is responsible for converting the user's morse code input to an ASCII letter. For example, it is here that a "dot, dash, enter" input assigns "A" to our letter variable. 
 
-```verilog
-always @(posedge clk) begin
-    h_sync <= (widthPos < H_SYNC_COLUMN) ? 1'b1 : 1'b0;
-    v_sync <= (heightPos < V_SYNC_LINE) ? 1'b1 : 1'b0;
-end
-```
+We represent the input as a 6 bit binary value, where a 1 represents a dash and a 0 represents a dot. Initalized as 0, the morse code variable shifts to the left as the binary input is inserted at its end. The input can be any number betweenn 0-4 button presses. Each user input will have a unique morse_code and code_length identifier. These are used to to form a dictionary, of sorts, where each identifier corresponds to a different, 8 bit, letter.   
 
-- `h_sync` is high (`1`) during the horizontal sync pulse and low (`0`) otherwise.
-- `v_sync` is high (`1`) during the vertical sync pulse and low (`0`) otherwise.
+Note, also, that each input (dot, dash, space, enter) is debounced.   
 
-### Inputs and Outputs
-#### **Inputs**
-- `clk`: Clock signal for synchronization.
-- `widthPos`: Horizontal pixel position.
-- `heightPos`: Vertical pixel position.
+morse_code_translator_tb:
 
-#### **Outputs**
-- `h_sync`: Horizontal sync signal.
-- `v_sync`: Vertical sync signal.
+This testbench is used in pairing with the top_2 module. Here, we simulated different morse code sequences to verify the input was paired with the correct ASCII value. 
 
-### Parameters
-- `H_SYNC_COLUMN`: Specifies the width (in pixels) of the horizontal sync pulse.
-- `V_SYNC_LINE`: Specifies the height (in lines) of the vertical sync pulse.
+debounce.v:
 
----
+The debouncer module handles noisy button inputs, ensuring only a single input is processed. A button press is triggered by the positive edge of the debounced signal. 
 
-## **Getting Started**
+debounce_tb:
+This module was used to test our debouncer with varying inputs. 
 
-### Prerequisites
-- A Verilog simulator or FPGA development environment (e.g., ModelSim, Vivado, Quartus).
-- Basic knowledge of VGA timing standards.
+ascii_rom:
+The ascii_rom module provides us with defined bit patterns for each ASCII character, used for our vga display.  
 
-### Running the Project
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/vga-synchronization.git
-   ```
-2. Open the Verilog file in your preferred simulator or IDE.
-3. Simulate the design to verify the behavior of the `h_sync` and `v_sync` signals.
-4. Optionally, implement the design on an FPGA to drive a VGA display.
+vga_controller:
+Here, we assign a letter input to its corresponding bit pattern defined in ascii_rom. Each user input is stored in memory so they remain on the screen until the reset button is pressed.
 
----
+vga_top:
+Here, we instantiate the top_2 module, which translates the user input to a letter. This translated ASCII letter is then sent to vga_controller, which configures the display. 
 
-## **Customization**
-- Modify the `H_SYNC_COLUMN` and `V_SYNC_LINE` parameters to support different resolutions.
-- Integrate this module with a pixel generator to produce visual content.
-
----
-
-## **Applications**
-- VGA controllers for FPGA projects.
-- Generating timing signals for custom display systems.
-- Understanding display synchronization concepts.
+In this module we also establish a black background with white text for the screen display. 
 
 ---
 
 ## **References**
-- [VGA Timing Standards (Wikipedia)](https://en.wikipedia.org/wiki/VGA)
-- [FPGA4Fun: VGA in FPGA](https://www.fpga4fun.com/VGA.html)
 
+ADD
 ---
-
-## **License**
-This project is licensed under the MIT License. See the `LICENSE` file for details.
-
----
-
-## **Contributing**
-Contributions are welcome! If you have suggestions or improvements, feel free to submit a pull request.
-
----
-
-## **Contact**
-For any questions or feedback, please contact:
-- **Name:** Your Name
-- **Email:** your.email@example.com
-- **GitHub:** [yourusername](https://github.com/yourusername)
 
