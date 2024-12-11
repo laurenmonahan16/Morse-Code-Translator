@@ -10,7 +10,7 @@ For our project, we implemented a morse code translator, where the user can push
 
 ## How to Run
 
-You can run this project on Verilog, assigning vga_top as the top module. Ensure the fpga board is connected to the monitor and turn on the VGA switch. The translator operates by the use of five buttons: a dot, dash, enter, space, and reset. These should be pre-set to P17, N17, P18, M17, and M18 respectively. You can confirrm which buttons correspond to which pins on the board in the contraints.xdc file. Reference the morse code dictionary pdf when inputting dot/dash combinations. When you have finished one input combination of dots/dashes/spaces, click the enter button on the fpga and you will see the corresponding letter appear on the screen. Click reset when you want to clear the screen. 
+You can run this project on Verilog, assigning vga_top as the top module. Ensure the fpga board is connected to the monitor and turn on the VGA switch. The translator operates by the use of five buttons: a dot, dash, enter, space, and reset. These should be pre-set to P17, N17, P18, M17, and M18 respectively. You can confirrm which buttons correspond to which pins on the board in the contraints.xdc file. Reference the international morse code alphabet when inputting dot/dash combinations. When you have finished one input combination of dots/dashes/spaces, click the enter button on the fpga and you will see the corresponding letter appear on the screen. Click reset when you want to clear the screen. 
 
 ---
 
@@ -28,14 +28,10 @@ morse_code_translator_tb:
 This testbench is used in pairing with the top_2 module. Here, we simulated different morse code sequences to verify the input was paired with the correct ASCII value. 
 
 debounce:
-
 The debouncer module handles noisy button inputs, ensuring only a single input is processed. A button press is triggered by the positive edge of the debounced signal. 
 
 debounce_tb:
 This module was used to test our debouncer with varying inputs. 
-
-clk.divider:
-?help :(
 
 ascii_rom:
 The ascii_rom module provides us with defined bit patterns for each ASCII character, used for our vga display.  
