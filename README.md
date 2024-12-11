@@ -19,7 +19,7 @@ top_2:
 
 The top_2 module is responsible for matching the user's morse code input to an ASCII letter. For example, it is here that a "dot, dash, enter" input assigns "A" to our letter variable. 
 
-We represent the input as a 6 bit binary value, where a 1 represents a dash and a 0 represents a dot. Initalized as 0, the morse code variable shifts to the left as the binary input is inserted at its end. The input can be any number betweenn 0-4 button presses. Each user input will have a unique morse_code and code_length identifier. These are used to to form a dictionary, of sorts, where each identifier corresponds to a different, 8 bit, letter.   
+We represent the input as a 6 bit binary value, where a 1 represents a dash and a 0 represents a dot. Initalized as 0, the morse code variable shifts to the left as the binary input is inserted at its end. The input can be any number betweenn 0-4 button presses. Each user input will have a unique morse_code and code_length identifier. These are used to to match each identifier to its corresponding 8 bit letter.   
 
 Note, also, that each input (dot, dash, space, enter) is debounced.   
 
