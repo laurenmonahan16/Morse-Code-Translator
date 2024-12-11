@@ -2,7 +2,7 @@
 
 Team 14: Lauren Monahan, Nandana Alwarappan, Sterling Wodzro, Aidan Born
 
-Project Demo Link: *ADD*
+Project Demo Link: https://drive.google.com/file/d/1YTlfVk96nspHmEFZ_bo7JPcKvwHR-VyM/view?usp=sharing
 
 For our project, we implemented a morse code translator, where the user can push a sequence of buttons either representing a dot, dash, space, enter, or reset on the fpga board as ASCII text appears on the host computer screen. 
 
