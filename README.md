@@ -54,6 +54,5 @@ When pushing the bitstream to the FPGA, you should expect to see the eight righm
 ## **References**
 https://github.com/FPGADude/Digital-Design/tree/main/FPGA%20Projects/VGA%20Projects/VGA%20Text%20Generation
 
-ADD
 ---
 
