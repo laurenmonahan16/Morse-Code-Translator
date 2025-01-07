@@ -47,7 +47,7 @@ In this module we also establish a black background with white text for the scre
 ---
 
 ## **What To Expect From Bitstream**
-When pushing the bitstream to the FPGA, you should expect to see the eight righmost LEDs display the 8-bit ASCII value that corresponds to the letter input. After you input you morse code sequence and press the enter button, you will see the equivalent text appear on the VGA screen.  
+When pushing the bitstream to the FPGA, you should expect to see the eight righmost LEDs display the 8-bit ASCII value that corresponds to the letter input. After you input your morse code sequence and press the enter button, you will see the equivalent text appear on the VGA screen.  
 
 ---
 
